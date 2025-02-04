@@ -1,12 +1,23 @@
 import express from 'express';
 import passport from 'passport';
 import session from 'express-session';
-
 import mongoose from 'mongoose';
 import config from './database/config/database.config.mjs';
 
+const app = express();
 
-const app = express()
+app.use(express.json());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 const env = process.env.NODE_ENV || 'development';
 const mongoUri = config[env].url;
