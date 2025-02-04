@@ -3,7 +3,9 @@ import passport from 'passport';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import config from './database/config/database.config.mjs';
+// import './database/seeders/userSeeder.mjs';
 
+ 
 const app = express();
 
 app.use(express.json());

@@ -5,5 +5,4 @@ const server = app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
 
-const io = server
-export default io
+export default server
