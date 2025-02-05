@@ -3,7 +3,8 @@ import passport from 'passport';
 import session from 'express-session';
 import mongoose from 'mongoose';
 import config from './database/config/database.config.mjs';
-// import './database/seeders/userSeeder.mjs';
+import allRouter from './routes/index.mjs';
+import './database/seeders/userSeeder.mjs';
 
  
 const app = express();
@@ -18,8 +19,10 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(allRouter)
 
 
+ 
 
 const env = process.env.NODE_ENV || 'development';
 const mongoUri = config[env].url;

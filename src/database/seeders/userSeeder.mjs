@@ -22,13 +22,14 @@ const users = [
       await User.deleteMany({});
       await User.create(users);
       console.log('Users seeded successfully');
-      process.exit();
+      await mongoose.disconnect(); 
+      console.log("Database connection closed");
     } catch (error) {
       console.error('Error seeding users:', error);
-      process.exit(1);
+      await mongoose.disconnect(); 
     }
   };
-  
+   
   seedUsers();
 
   export default seedUsers
