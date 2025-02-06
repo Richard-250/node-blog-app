@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import config from './database/config/database.config.mjs';
 import allRouter from './routes/index.mjs';
 // import './database/seeders/userSeeder.mjs';
-
+import './config/passport.config.mjs'
  
 const app = express();
 
@@ -20,6 +20,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(allRouter)
+
  
 
  
@@ -34,8 +35,9 @@ export const connectDB = async () => {
   } catch (err) {
     console.error('MongoDB connection error:', err);
     process.exit(1); 
-  }
-};
+  } 
+}; 
+
 
 connectDB()
 

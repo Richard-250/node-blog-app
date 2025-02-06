@@ -1,4 +1,3 @@
-import passport from "passport";
 import jwt from 'jsonwebtoken';
 import User from "../database/models/user.mjs";
 import { sendVerificationEmail } from '../services/sendEmail.service.mjs';
@@ -44,7 +43,7 @@ export const loginUser = async (req, res) => {
         res.json({
         message: "Login successful",
       data: {
-        user
+        user, token
       }
  
         });
@@ -56,6 +55,11 @@ export const loginUser = async (req, res) => {
 export const verifyEmail = async (req, res) => {
     try {
         const { token } = req.params;
+
+        if (!token) {
+            return res.status(400).json({ message: "Invalid or missing token" });
+        }
+ 
         const decode = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decode.userId);
 

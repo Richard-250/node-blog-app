@@ -20,13 +20,13 @@ const userSchema = new mongoose.Schema({
     },
     telephone: {
         type: String,
-        required: true,
+        default: 'Not Provided',
         length: 10,
     },
     isVerified: {
         type: Boolean,
         default: false,
-    }, 
+    },  
     verificationToken: String,
     googleId: String,
 }, { timestamps: true });
