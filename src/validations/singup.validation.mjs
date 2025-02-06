@@ -12,6 +12,13 @@ const signupSchema = Joi.object({
         "string.pattern.base":
             "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character.",
     }),
+    telephone: Joi.string()
+    .pattern(/^[0-9]{10}$/) 
+    .required()
+    .messages({
+        "string.pattern.base": "Invalid phone number format.",
+        "string.empty": "Telephone is required",
+    }),
 });
 
  const validateSignup = (req, res, next) => {

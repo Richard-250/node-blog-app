@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
+import 'dotenv/config'
 
 const transporter = nodemailer.createTransport({
     service: process.env.EMAIL_SERVICE,
@@ -10,6 +11,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendVerificationEmail = async (user) => {
+  try {
     const token = jwt.sign(
         { userId: user._id },
         process.env.JWT_SECRET,
@@ -19,6 +21,7 @@ export const sendVerificationEmail = async (user) => {
     const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${token}`
 
     await transporter.sendMail({
+      from: `"iBlog Team" <${process.env.EMAIL_USER}>`,
         to: user.email,
         subject: 'Verify Your Email',
         html: `
@@ -28,7 +31,14 @@ export const sendVerificationEmail = async (user) => {
         Verify Email
       </a>
       <br> <br>Remember, beware of scams and keep this one-time verification link confidential.<br>
-    </strong><br> DESTRUCTORS </div>
+    </strong><br> iBlog Team</div>
       `
     });
+
+    console.log(`Verification email sent to ${user.email}`);
+    
+  } catch (error) {
+    console.error("Error sending email:", error);
+    throw new Error("Could not send verification email");
+}
 };

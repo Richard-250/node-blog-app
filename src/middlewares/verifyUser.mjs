@@ -4,7 +4,7 @@ const verifyUser = async (req, res, next) => {
     try {
         const exists = await User.findOne({ email: req.body.email });
         if (exists) {
-            return res.status(400).json({ status: false, message: 'Email Already Exists' });
+            return res.status(400).json({ status: false, message: 'User Already Exists' });
         }
         next()
     } catch (err) {
