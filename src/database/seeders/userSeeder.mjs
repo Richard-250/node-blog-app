@@ -18,18 +18,14 @@ const users = [
 
   const seedUsers = async () => {
     try {
-      await mongoose.connect(process.env.DEV_DATABASE_URL);
-      await User.deleteMany({});
+      const isAdminCreated = await User.findOne({ email: users[0].email }) 
+      if ( isAdminCreated) return 
       await User.create(users);
       console.log('Users seeded successfully');
-      await mongoose.disconnect(); 
-      console.log("Database connection closed");
     } catch (error) {
       console.error('Error seeding users:', error);
       await mongoose.disconnect(); 
     }
   };
-   
-  seedUsers();
 
   export default seedUsers
