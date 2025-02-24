@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../database/models/user.mjs";
 import { sendVerificationEmail } from "../services/sendEmail.service.mjs";
-
+import generateToken from "../services/generateToken.mjs";
 
 export const registerUser = async (req, res) => {
   console.log(req.body);
@@ -41,14 +41,14 @@ export const loginUser = async (req, res) => {
       return res
         .status(401)
         .json({ message: "Email or Password are not valid" });
-    }
-    const { token } = req.params;
-    const decode = jwt.verify(token, process.env.JWT_SECRET);
-    const userToken = await User.findById(decode.userId);
+    };
+    console.log("user", user);
+    const userToken = await generateToken(user);
     res.json({
       message: "Login successful",
       data: {
-        user, userToken
+        user,
+        userToken,
       },
     });
   } catch (err) {
@@ -81,5 +81,18 @@ export const verifyEmail = async (req, res) => {
     res.json({ message: "Email verified successfuly" });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+export const addBlog = (req, res) => {
+  try {
+    const user = req.user;
+    console.log("user", user);
+    if (user.role && user.role === "author") {
+      res.status(201).json("blog created success full");
+    }
+    return res.status(403).json("only author can create blog!");
+  } catch (error) {
+    console.log("error", error);
   }
 };

@@ -29,6 +29,7 @@ passport.use(
           googleId: profile.id,
           email: profile.emails[0].value,
           fullName: profile.displayName,
+          role:  "blogger",
           isVerified: true,
           telephone: "", // Empty because Google doesn't provide it
           password: Math.random().toString(36).slice(-8), // Random temporary password

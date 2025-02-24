@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from 'bcrypt'
 
+
 const userSchema = new mongoose.Schema({
     fullName: {
         type: String,
@@ -27,6 +28,12 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },  
+    role: {
+        type: String,
+        enum: ['blogger', 'admin', 'author'],
+        default: 'blogger'
+    
+    },
     verificationToken: String,
     googleId: String,
 }, { timestamps: true });

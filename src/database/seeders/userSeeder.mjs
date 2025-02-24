@@ -12,6 +12,7 @@ const users = [
       email: 'admin@example.com',
       password: 'admin123',
       telephone: '1234567890',
+       role: "admin",
       isVerified: true
     }
   ];
