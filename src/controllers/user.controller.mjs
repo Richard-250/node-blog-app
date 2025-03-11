@@ -26,9 +26,15 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
 
+    const foundUser = await User.findOne({ email});
+    if (!foundUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    console.log("foundUser:", foundUser)
+
     if (!user) {
       return res
-        .status(403)
+        .status(401)
         .json({ message: "Email or password are not valid" });
     }
 
@@ -44,7 +50,7 @@ export const loginUser = async (req, res) => {
     };
     console.log("user", user);
     const userToken = await generateToken(user);
-    res.status(200).json({
+    res.status(201).json({
       message: "Login successful",
       userData: {
         user,

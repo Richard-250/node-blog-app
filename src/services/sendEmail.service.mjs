@@ -15,7 +15,7 @@ export const sendVerificationEmail = async (user) => {
   try {
     const token = await generateToken(user);
 
-    const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${token}`;
+    const verificationUrl = `${process.env.FRONTEND_URL}/api/v1/users/verify-email/${token}`;
 
     await transporter.sendMail({
       from: `"iBlog Team" <${process.env.EMAIL_USER}>`,

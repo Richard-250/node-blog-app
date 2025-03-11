@@ -5,7 +5,7 @@ import welcome from './welcomeRoute.mjs';
 const routes = Router();
 
 
-routes.use(userRoutes); 
-routes.use(welcome);
+routes.use('/users', userRoutes); 
+routes.use('/', welcome);
 
 export default routes;
