@@ -28,7 +28,7 @@ export const loginUser = async (req, res) => {
 
     if (!user) {
       return res
-        .status(401)
+        .status(403)
         .json({ message: "Email or password are not valid" });
     }
 
@@ -44,12 +44,12 @@ export const loginUser = async (req, res) => {
     };
     console.log("user", user);
     const userToken = await generateToken(user);
-    res.json({
+    res.status(200).json({
       message: "Login successful",
-      data: {
+      userData: {
         user,
-        userToken,
       },
+      userToken,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
