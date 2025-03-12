@@ -16,7 +16,7 @@ export const registerUser = async (req, res) => {
       data: user,
     });
   } catch (err) {
-    res.status(500).json({ status: false, message: err.message });
+    res.status(500).json({ status: false, message: "something went wrong" , error: err.message });
     console.log("user not saved");
   }
 };
@@ -51,15 +51,15 @@ export const loginUser = async (req, res) => {
     console.log("user", user);
     const userToken = await generateToken(user);
     res.status(201).json({
-      message: "Login successful",
+      message: "Login successfull",
       userData: {
         user,
       },
       userToken,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+    res.status(500).json({ error: err.message, message: "something went wrong" });
+  };
 };
 
 export const verifyEmail = async (req, res) => {
@@ -68,26 +68,26 @@ export const verifyEmail = async (req, res) => {
 
     if (!token) {
       return res.status(400).json({ message: "Invalid or missing token" });
-    }
+    };
 
     const decode = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decode.userId);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
-    }
+    };
 
     if (user.isVerified) {
       return res.status(400).json({ message: "User already verified" });
-    }
+    };
 
     user.isVerified = true;
     await user.save();
 
-    res.json({ message: "Email verified successfuly" });
+    res.status(200).json({ message: "Email verified successfuly" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+    res.status(500).json({ error: err.message, message: 'something went wrong' });
+  };
 };
 
 export const addBlog = (req, res) => {
@@ -95,10 +95,10 @@ export const addBlog = (req, res) => {
     const user = req.user;
     console.log("user", user);
     if (user.role && user.role === "author") {
-      res.status(201).json("blog created success full");
+      res.status(201).json("blog created successfully");
     }
     return res.status(403).json("only author can create blog!");
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
   }
 };

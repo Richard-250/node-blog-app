@@ -1,5 +1,7 @@
 // import { connection } from "mongoose";
 
+// import { required } from "joi";
+
 // import { response } from "express";
 
 export const signUp = {
@@ -152,6 +154,80 @@ export const loginUser = {
           },
         },
       },
+    },
+    500: {
+      description: "Server error",
+    },
+  },
+};
+
+
+export const verifyEmail = {
+  tags: ["Verify Email"],
+  description: "Verify User Email",
+  operationId: "Verify Email",
+  parameters: [
+    {
+      name: "token",
+      in: "params",
+      description: "Token sent to the user's email",
+      required: true,
+      schema: {
+        type: "string",
+      },
+    },
+  ],
+  responses: {
+    200: {
+      description: "Email verified successfully",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              message: {
+                type: "string",
+                example: "Email verified",
+              },
+            },
+          },
+        },
+      },
+    },
+    404: {
+      description: "User not found",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              message: {
+                type: "string",
+                example: "User not founf",
+              },
+            },
+          },
+        },
+      },
+    },
+    400: {
+      description: "Use Already Verified",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              message: {
+                type: "string",
+                example: " User Already verified",
+              },
+            },
+          },
+        },
+      },
+    },
+    401: {
+      description: "Invalid Token",
     },
     500: {
       description: "Server error",

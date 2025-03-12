@@ -1,5 +1,5 @@
 
-import { signUp, loginUser } from "./docs-data.js";
+import { signUp, loginUser, verifyEmail } from "./docs-data.js";
 import 'dotenv/config'
 
 
@@ -27,7 +27,6 @@ export const swaggerDocument = {
         securitySchemes: {
             bearerAuth: {
                 type: 'http',
-                name: 'Authorization',
                 scheme: 'bearer',
                 in: 'header',
                 bearerFormat: 'JWT'
@@ -40,6 +39,9 @@ export const swaggerDocument = {
         },
         '/api/v1/users/login': {
             post: loginUser,
+        },
+        '/api/v1/users/verify-email/{token}': {
+            get: verifyEmail,
         },
     },
         
